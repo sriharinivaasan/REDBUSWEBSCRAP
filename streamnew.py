@@ -1,5 +1,6 @@
 import streamlit as st
 import pymysql
+import pandas as pd
 mydb = pymysql.connect(
     host="localhost",
     user="root",
@@ -26,4 +27,13 @@ if button1:
     query = f"SELECT * FROM redbusfinal WHERE state = '{country}' AND route = '{route}';"
     mycursor.execute(query)
     data = mycursor.fetchall()
-    st.table(data)   
+    #st.table(data)   
+
+    column_names = ["Bus ID", "State", "Route", "Link of Bus Route", "Bus Name", "Bus Type", "Arrival Time", 
+                    "Travel Time", "Departure Time", "Star Rating", "Price", "Available Seats"]
+    
+    # Create a DataFrame
+    df = pd.DataFrame(data, columns=column_names)
+    
+    # Display as a table
+    st.table(df)  # Display the DataFrame as a table with headers
